@@ -80,7 +80,7 @@ while running:
     global keys
     keys = pygame.key.get_pressed()
 
-    enemy.move
+    enemy.move()
 
     pygame.display.set_caption("Working title")
     clock.tick(30)

@@ -1,5 +1,6 @@
 import pygame
 import os
+import random
 
 # os.chdir(os.path.dirname(file))
 pygame.init()
@@ -12,8 +13,8 @@ class enemy(object):
         enemyRight = pygame.transform.flip(enemyLeft, True, False)
 
         def __init__(self, x, y, width, height, end):
-                self.x=x
-                self.y=y
+                self.x= x
+                self.y= y
                 self.width = width
                 self.height = height
                 self.end= end
@@ -24,7 +25,8 @@ class enemy(object):
                 self.health = 0.2
                 self.visible = True
                 self.hitbox = (self.x + 2, self.y, 70, 60)
-
+                self.previous_pos = self.x
+                self.travel = random.randint(-250, 250)
 
         def draw(self, gameDisplay):
             if self.visible:
@@ -34,13 +36,15 @@ class enemy(object):
                     gameDisplay.blit(self.enemyLeft, (self.x, self.y))
                     self.walkCount += 0
 
-
+        
+        
         def move(self):
-            if self.vel > 0:
-                if self.y + self.vel < self.path[1]:
-                    self.y += self.vel
+                if abs(self.x - self.previous_pos) >= abs(self.travel):
+                        self.previous_pos = self.x
+                        self.travel = random.randint(-250, 250)
 
-
+                self.x += self.vel * (self.travel/abs(self.travel))
+        
         def collision(self):
             if self.health > 0:
                 self.health-= 1
